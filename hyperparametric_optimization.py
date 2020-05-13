@@ -11,7 +11,7 @@
 # 
 # One way to find the optimal hyperparameters is to train our model on different values of these hyperparameters and check accuracy on the validation set. In case of multiple hyperparameters, we need to make a grid having different values at each node as shown in the diagram below.
 # 
-# ![grid_seacrh_pic.png](attachment:image.png)
+# ![grid_seacrh_pic.png](images/Capture.JPG)
 # 
 # The validation error is calculated by testing model accuracy on the validation set after training it on training set using each combination of hyperparameters. To understand training, validation and testing errors, [please follow this link](https://datamaniac.tech/data_science/understanding-training-testing-and-validation-errors/).
 # 
@@ -19,7 +19,7 @@
 # 
 # Sklearn provides us a method to perform above grid operations easily using grid_search_cv. We will look at its implementation in this notebook. View this notebook on [Kaggle](https://www.kaggle.com/prasun2106/steps-for-hyperparametric-optimization)
 
-# In[15]:
+# In[1]:
 
 
 import pandas as pd
@@ -29,13 +29,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 
-# In[17]:
+# In[3]:
 
 
-df = pd.read_csv('../input/grid-search/data.csv',header = None)
+df = pd.read_csv('data.csv',header = None)
 
 
-# In[18]:
+# In[10]:
 
 
 plt.figure()
@@ -43,23 +43,22 @@ plt.scatter(df.iloc[:,0],df.iloc[:,1],c = df.iloc[:,2])
 plt.title('Scatter plot of x and y')
 plt.xlabel('x')
 plt.ylabel('y')
-plt.legend()
 
 
-# In[19]:
+# In[11]:
 
 
 X = df.iloc[:,0:2]
 y = df.iloc[:,2]
 
 
-# In[20]:
+# In[12]:
 
 
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.2, random_state = 42)
 
 
-# In[21]:
+# In[13]:
 
 
 clf = DecisionTreeClassifier()
@@ -68,13 +67,13 @@ y_pred = clf.predict(X_test)
 y_pred_train = clf.predict(X_train)
 
 
-# In[22]:
+# In[14]:
 
 
 from sklearn import metrics
 
 
-# In[24]:
+# In[15]:
 
 
 print(f'accuracy = {metrics.accuracy_score(y_pred, y_test)}')
@@ -90,30 +89,30 @@ print(f'f1_score = {metrics.f1_score(y_pred, y_test)}')
 
 # We can see that the f1 score for the training set is 1 and for the testing set it is 0.7. The large difference in training and testing f1 score denotes that we are dealing with the case of high variance (or overfitting). This fact can be understood on the basis of any standard model complexity graph which is as shown below:
 # 
-# ![image.png](attachment:image.png)
+# ![image.png](images/model_complexity.png)
 
 # # Improving score using GridSearchCV and Cross Validation
 
-# In[25]:
+# In[16]:
 
 
 from sklearn.model_selection import cross_val_score
 
 
-# In[28]:
+# In[17]:
 
 
 score = cross_val_score(clf, X, y, cv = 5)
 score
 
 
-# In[29]:
+# In[18]:
 
 
 print(f'accuracy = {score.mean():0.2f} +/- {score.std()*2:0.2f}')
 
 
-# In[30]:
+# In[19]:
 
 
 # cross validation using shuffle split
@@ -122,7 +121,7 @@ cv = ShuffleSplit(n_splits = 5, test_size = 0.3,random_state = 42)
 score_shuffle = cross_val_score(clf, X, y, cv = cv)
 
 
-# In[31]:
+# In[20]:
 
 
 print(f'accuracy = {score_shuffle.mean():0.2f} +/- {score_shuffle.std()*2:0.2f}')
@@ -130,7 +129,7 @@ print(f'accuracy = {score_shuffle.mean():0.2f} +/- {score_shuffle.std()*2:0.2f}'
 
 # # GridSearchCV
 
-# In[32]:
+# In[21]:
 
 
 from sklearn.model_selection import GridSearchCV
@@ -158,7 +157,7 @@ grid_obj.fit(X_train, y_train)
 best_clf = grid_obj.best_estimator_
 
 
-# In[33]:
+# In[22]:
 
 
 #Predict using the best clf
@@ -166,7 +165,7 @@ y_pred_grid = best_clf.predict(X_test)
 y_pred_grid_train = best_clf.predict(X_train)
 
 
-# In[35]:
+# In[23]:
 
 
 
