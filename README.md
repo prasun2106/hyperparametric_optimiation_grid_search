@@ -10,7 +10,7 @@ The choice of hyperparameters can greatly influence model predictions. In scikit
 
 One way to find the optimal hyperparameters is to train our model on different values of these hyperparameters and check accuracy on the validation set. In case of multiple hyperparameters, we need to make a grid having different values at each node as shown in the diagram below.
 
-![grid_seacrh_pic.png](attachment:image.png)
+![grid_seacrh_pic.png](images/Capture.JPG)
 
 The validation error is calculated by testing model accuracy on the validation set after training it on training set using each combination of hyperparameters. To understand training, validation and testing errors, [please follow this link](https://datamaniac.tech/data_science/understanding-training-testing-and-validation-errors/).
 
